@@ -3,12 +3,12 @@
 Package.describe({
 	summary: "A roles based account management system using bootstrap 3",
   version: "0.2.8",
-  git: "https://github.com/hharnisc/meteor-accounts-admin-ui-bootstrap-3.git",
+  git: "https://github.com/kaoskeya/meteor-accounts-admin-ui-bootstrap-3.git",
   name: 'accounts-admin-ui-bootstrap-3'
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom("METEOR@0.9.0");
+  api.versionsFrom("METEOR@1.0.0");
 
 	api.use('standard-app-packages', ['client', 'server']);
 	api.use('mizzao:bootstrap-3', 'client');
