@@ -2,19 +2,25 @@
 
 Package.describe({
 	summary: "A roles based account management system using bootstrap 3",
-  version: "0.2.8",
+  version: "0.2.9",
   git: "https://github.com/kaoskeya/meteor-accounts-admin-ui-bootstrap-3.git",
-  name: 'accounts-admin-ui-bootstrap-3'
+  name: 'kaoskeya:accounts-admin-ui-bootstrap-3'
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom("METEOR@1.0.0");
+  api.versionsFrom("METEOR@1.0");
 
-	api.use('standard-app-packages', ['client', 'server']);
-	api.use('mizzao:bootstrap-3', 'client');
-	api.use('alanning:roles', ['client', 'server']);
-  api.use('iron:router', 'client', { weak: true });
-  api.use('mizzao:user-status@0.6.0', 'client', { weak: true });
+  api.use(
+    [
+      'underscore',
+    ],
+    ['client','server']
+  );
+
+
+  api.use(['templating'], 'client');
+  api.use('check');
+  api.use('mizzao:user-status@0.6.4', 'client', { weak: true });
 
   api.addFiles('lib/config.js', ['client', 'server']);
 	api.addFiles('lib/user_query.js', ['client', 'server']);
