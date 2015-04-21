@@ -103,18 +103,20 @@ Meteor.methods({
 	},
 
 	updateUserInfo: function(id, property, value) {
-    check(id, String);
-    check(property, String);
-    //Giving the value a range of possible safe values
-    check(value, Match.OneOf(String, Number, Boolean, Date, undefined, null));
+	    check(id, String);
+	    check(property, String);
+	    //Giving the value a range of possible safe values
+	    check(value, Match.OneOf(String, Number, Boolean, Date, undefined, null));
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, ['admin'])) {
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
+		}
 
-		if (property !== 'profile.name')
+		if (property !== 'profile.name') {
 			throw new Meteor.Error(422, "Only 'name' is supported.");
+		}
 
-		obj = {};
+		var obj = {};
 		obj[property] = value;
 		Meteor.users.update({_id: id}, {$set: obj});
 
