@@ -47,50 +47,56 @@ Template.accountsAdmin.helpers({
     return Meteor.userId() === userId;
   },
   fields: function() {
-    var fields = [{
-      key: '',
-      label: '',
-      tmpl: Template.accountsAdminControlPanel
-    }, {
-      key: 'username',
-      label: 'username'
-    }, {
-      key: 'profile.name',
-      label: 'Name'
-    }, {
-      key: 'profile.businessName',
-      label: 'Account Name'
-    }, {
-      key: 'emails.0.address',
-      label: 'Email',
-      fn: function(value, user) {
-        return getEmail(value, user);
-      }
-    }, {
-      key: 'roles',
-      label: 'Roles',
-      fn: function(value) {
-        return getRoles(value);
-      }
-    }, {
-      key: 'createdAt',
-      label: 'Created?',
-      fn: function(value) {
-        return value && value.toDateString();
-      }
-    }, ];
-    if (AccountsAdmin.config.userStatus) {
-      fields.push({
-        key: 'status.lastLogin.date',
-        label: 'Last Login',
-        fn: function(value) {
-          return value && value.toLocaleString();
+    if (typeof AccountsAdminFields != 'undefined') {
+      var fields = AccountsAdminFields;
+    } else {
+      var fields = [{
+        key: '',
+        label: '',
+        tmpl: Template.accountsAdminControlPanel
+      }, {
+        key: 'username',
+        label: 'username'
+      }, {
+        key: 'profile.name',
+        label: 'Name'
+      }, {
+        key: 'profile.businessName',
+        label: 'Account Name'
+      }, {
+        key: 'emails.0.address',
+        label: 'Email',
+        fn: function(value, user) {
+          return getEmail(value, user);
         }
-      });
-      fields.push({
-        key: 'status.online',
-        label: 'Online?'
-      });
+      }, {
+        key: 'roles',
+        label: 'Roles',
+        fn: function(value) {
+          return getRoles(value);
+        }
+      }, {
+        key: 'createdAt',
+        label: 'Created?',
+        fn: function(value) {
+          return value && value.toDateString();
+        }
+      }, ];
+
+      if (AccountsAdmin.config.userStatus) {
+        fields.push({
+          key: 'status.lastLogin.date',
+          label: 'Last Login',
+          fn: function(value) {
+            return value && value.toLocaleString();
+          }
+        });
+        fields.push({
+          key: 'status.online',
+          label: 'Online?'
+        });
+      }
+
     }
     return fields;
   },
