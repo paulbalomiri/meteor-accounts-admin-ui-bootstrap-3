@@ -3,7 +3,7 @@ Template.updateRolesModalInner.helpers({
 		return Roles.getAllRoles();
 	},
 	adminRole: function() {
-		return this.name === 'admin';
+		return this.name === AccountsAdmin.config.adminRole;
 	}
 });
 

@@ -5,7 +5,7 @@ Meteor.methods({
 	deleteUser: function(userId) {
     check(userId, String);
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, [AccountsAdmin.config.adminRole]))
 			throw new Meteor.Error(401, "You need to be an admin to delete a user.");
 
 		if (user._id == userId)
@@ -20,7 +20,7 @@ Meteor.methods({
     check(role, String);
     check(group, Match.Optional(String));
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, [AccountsAdmin.config.adminRole]))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		if (user._id == userId)
@@ -43,7 +43,7 @@ Meteor.methods({
     check(role, String);
     check(group, Match.Optional(String));
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, [AccountsAdmin.config.adminRole]))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		if (user._id == userId)
@@ -63,7 +63,7 @@ Meteor.methods({
 	addRole: function(role) {
     check(role, String);
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, [AccountsAdmin.config.adminRole]))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		// handle existing role
@@ -76,14 +76,14 @@ Meteor.methods({
 	removeRole: function(role) {
     check(role, String);
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin']))
+		if (!user || !Roles.userIsInRole(user, [AccountsAdmin.config.adminRole]))
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 
 		// handle non-existing role
 		if (Meteor.roles.find({name: role}).count() < 1 )
 			throw new Meteor.Error(422, 'Role ' + role + ' does not exist.');
 
-		if (role === 'admin')
+		if (role === AccountsAdmin.config.adminRole)
 			throw new Meteor.Error(422, 'Cannot delete role admin');
 
 		// remove the role from all users who currently have the role
@@ -108,7 +108,7 @@ Meteor.methods({
 	    //Giving the value a range of possible safe values
 	    check(value, Match.OneOf(String, Number, Boolean, Date, undefined, null));
 		var user = Meteor.user();
-		if (!user || !Roles.userIsInRole(user, ['admin'])) {
+		if (!user || !Roles.userIsInRole(user, AccountsAdmin.config.adminRole)) {
 			throw new Meteor.Error(401, "You need to be an admin to update a user.");
 		}
 
@@ -127,7 +127,7 @@ Meteor.methods({
     check(targetUserId, String);
 
     var user = Meteor.user();
-    if (!user || !Roles.userIsInRole(user, ['admin']))
+    if (!user || !Roles.userIsInRole(user, [AccountsAdmin.config.adminRole]))
       throw new Meteor.Error(401, "You need to be an admin to impersonate a user.");
 
     if (! Meteor.users.findOne(targetUserId))
