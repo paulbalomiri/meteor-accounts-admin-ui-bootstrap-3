@@ -21,6 +21,7 @@ Package.onUse(function (api) {
   api.use(['templating'], 'client');
   api.use('check');
   api.use('mizzao:user-status@0.6.4', 'client', { weak: true });
+  api.use('alanning:roles', ['server', 'client'])
 
   api.addFiles('lib/config.js', ['client', 'server']);
 	api.addFiles('lib/user_query.js', ['client', 'server']);
